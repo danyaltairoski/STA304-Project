@@ -1,6 +1,9 @@
 library(coefplot) library(ggstats) library(ggplot2) library(dplyr) library(readxl)
-#import sample data change work space setwd("C:/Users/10713/Desktop/304GW R") Dataset <- read_excel("Dataset.xlsx") Tidy_data <- attach(Dataset)
-########################### Hypothesis 1 Mann-Whitney Test df <- data.frame(
+#import sample data change work space setwd("C:/Users/10713/Desktop/304GW R") 
+Dataset <- read_excel("Dataset.xlsx") 
+Tidy_data <- attach(Dataset)
+########################### Hypothesis 1 Mann-Whitney Test 
+df <- data.frame(
 as = Tidy_data$academic_satisfaction,
 mode = Tidy_data$mode_of_learning )
 withOls_df <- filter(df, mode == 1) withoutOls = c(2,4,4)
@@ -17,7 +20,8 @@ boxplot(engage, engage_OLR, names = c("Engagement-Study", "Engagement-study w/ O
         main = "Comparing Academic Satisfaction: Online Resources vs. Traditional Learning",
         ylab = "Academic Satisfaction", col = c("green", "orange"))
 ##########################
-#set Likert level likert_level <- c(
+#set Likert level 
+likert_level <- c(
 "1",
 "2",
 "3",
@@ -31,18 +35,26 @@ df_all <- tibble(academic_satisfaction, recording_impact, annotate_impact, piazz
                                                                               "Agree",
                                                                               "Strongly agree"))))
 
-#generate centered bar plot with all data gglikert(df_all, variable_labels = c(
+#generate centered bar plot with all data 
+gglikert(df_all, variable_labels = c(
 academic_satisfaction = "Academic satisfaction", recording_impact = "Recording impact", annotate_impact = "Annotate impact", piazza_impact = "Piazza impact", online_understanding = "Online understanding"
 ))
 #multiple linear regression model Hypothesis 2
 model <- lm(academic_satisfaction ~ recording_impact + annotate_impact + piazza_impact, data = Dataset) summary(model)
-# Diagnostic plots, set to 2x2 grid par(mfrow = c(2, 2))
-# 1. Residuals vs. Fitted plot(model, which = 1)
-# 2. Q-Q Plot plot(model, which = 2)
-# 3. Scale-Location Plot plot(model, which = 3)
-# 4. Residuals vs. Leverage Plot plot(model, which = 5)
-# set back to 1x1 grid par(mfrow = c(1, 1))
-#use coefficient plot to visualize multiple linear regression slope coefplot(model, intercept = FALSE, title = "Coefficient Plot",
+# Diagnostic plots, set to 2x2 grid 
+par(mfrow = c(2, 2))
+# 1. Residuals vs. Fitted 
+plot(model, which = 1)
+# 2. Q-Q Plot 
+plot(model, which = 2)
+# 3. Scale-Location Plot 
+plot(model, which = 3)
+# 4. Residuals vs. Leverage Plot 
+plot(model, which = 5)
+# set back to 1x1 grid 
+par(mfrow = c(1, 1))
+#use coefficient plot to visualize multiple linear regression slope 
+coefplot(model, intercept = FALSE, title = "Coefficient Plot",
 xlab = "Coefficient value",
 ylab = "",
 newNames=c(academic_satisfaction = "Academic satisfaction",
