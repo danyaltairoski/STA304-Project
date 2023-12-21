@@ -1,5 +1,10 @@
-library(coefplot) library(ggstats) library(ggplot2) library(dplyr) library(readxl)
-#import sample data change work space setwd("C:/Users/10713/Desktop/304GW R") 
+library(coefplot) 
+library(ggstats) 
+library(ggplot2) 
+library(dplyr) 
+library(readxl)
+#import sample data change work space 
+setwd("C:/Users/10713/Desktop/304GW R") 
 Dataset <- read_excel("Dataset.xlsx") 
 Tidy_data <- attach(Dataset)
 ########################### Hypothesis 1 Mann-Whitney Test 
